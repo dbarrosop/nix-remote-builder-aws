@@ -1,0 +1,39 @@
+name: 'nix-remote-builder-aws'
+description: 'Github Action to deploy nix remote builders on demand'
+author: '@dbarrosop'
+inputs:
+  name:
+    required: true
+    description: 'unique name to tag the spot instance request'
+  ami:
+    required: true
+    description: 'AMI to use to instantiate the builder'
+  instance-type:
+    required: false
+    description: 'EC2 instance type'
+    default: 't4g.small'
+  security-group:
+    required: false
+    description: 'Security group to associate with the instance. It has to allow ssh from access from github workers'
+    default: 'nix-remote-builder-access-from-github'
+  ssh-key-name:
+    required: false
+    description: 'Name of the ssh keys to use for the instance'
+    default: 'nix-remote-builder'
+  ssh-private-key:
+    required: true
+    description: 'Ssh key to use to connect to the instance'
+  region:
+    required: true
+    description: 'which region to use for the request'
+  availability-zone:
+    required: false
+    description: 'which availability-zone to use for the request'
+  valid-hours:
+    required: false
+    default: '1'
+    description: 'the spot instance will be requested cancelled after this many hours'
+runs:
+  using: 'node16'
+  main: 'dist/main/index.js'
+  post: 'dist/cleanup/index.js'
