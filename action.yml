@@ -32,7 +32,7 @@ inputs:
   valid-hours:
     required: false
     default: '1'
-    description: 'the spot instance will be requested cancelled after this many hours'
+    description: 'the spot instance will be cancelled after this many hours if for some reason the cleanup job fails or the build takes too long'
 runs:
   using: 'node16'
   main: 'dist/main/index.js'

@@ -47,7 +47,7 @@ Excerpt from `actions.yml`:
   valid-hours:
     required: false
     default: '1'
-    description: 'the spot instance will be requested cancelled after this many hours'
+    description: 'the spot instance will be cancelled after this many hours if for some reason the cleanup job fails or the build takes too long'
 ```
 
 ## Outputs
@@ -100,6 +100,7 @@ You will need to preprovision a few things in AWS before you are able to use thi
    - Terminate EC2 instances
 2. SSH keys for your EC2 instances
 3. An AMI with nix already provisioned
+4. A security group that can be assigned to the EC2 instance and allows ssh access from gtihub
 
 ## Job Cleanup
 
