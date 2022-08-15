@@ -28,7 +28,7 @@ async function run(): Promise<void> {
     const availabilityZone = core.getInput('availability-zone', {
       required: false
     })
-    const repository = github.context.event.name
+    const repository = github.context.repo.repo
 
     const validUntil = new Date()
     validUntil.setHours(validUntil.getHours() + validHours)
