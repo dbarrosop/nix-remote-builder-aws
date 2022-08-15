@@ -19,6 +19,7 @@ async function wait(ms: number): Promise<void> {
 export async function RequestSpotInstance(
   client: EC2Client,
   name: string,
+  repository: string,
   ami: string,
   instanceType: string,
   securityGroup: string,
@@ -61,6 +62,10 @@ export async function RequestSpotInstance(
           {
             Key: 'Name',
             Value: name
+          },
+                    {
+            Key: 'Repository',
+            Value: repository
           }
         ]
       }

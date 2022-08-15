@@ -1,4 +1,5 @@
 const core = require('@actions/core')
+const github = require('@actions/github')
 
 import {EC2Client} from '@aws-sdk/client-ec2'
 
@@ -27,6 +28,7 @@ async function run(): Promise<void> {
     const availabilityZone = core.getInput('availability-zone', {
       required: false
     })
+    const repository = github.context.event.name
 
     const validUntil = new Date()
     validUntil.setHours(validUntil.getHours() + validHours)
@@ -37,6 +39,7 @@ async function run(): Promise<void> {
     const requestID = await RequestSpotInstance(
       client,
       name,
+      repository,
       ami,
       instanceType,
       securityGroup,
