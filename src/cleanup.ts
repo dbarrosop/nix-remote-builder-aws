@@ -1,10 +1,10 @@
-const core = require('@actions/core')
-
 import {EC2Client} from '@aws-sdk/client-ec2'
 
 import {TerminateInstance, CancelSpotInstanceRequest} from './aws'
 
 import {DeleteSshConfig} from './ssh'
+
+import * as core from '@actions/core'
 
 async function run(): Promise<void> {
   try {
@@ -12,7 +12,7 @@ async function run(): Promise<void> {
       required: true
     })
 
-    const client = new EC2Client({region: region})
+    const client = new EC2Client({region})
 
     const instanceID = core.getState('instanceID')
     if (instanceID !== '') {

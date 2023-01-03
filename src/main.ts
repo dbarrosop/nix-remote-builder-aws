@@ -1,12 +1,12 @@
-const core = require('@actions/core')
-
 import {EC2Client} from '@aws-sdk/client-ec2'
 
 import {RequestSpotInstance, WaitForspotInstance, GetPublicDnsName} from './aws'
 
 import {WriteSSHKey, WriteSSHConfig} from './ssh'
 
-function treatOutput(name: string, value: any): void {
+import * as core from '@actions/core'
+
+function treatOutput(name: string, value: string): void {
   core.info(`Setting output ${name} to ${value}`)
   core.setOutput(name, value)
   core.saveState(name, value)
@@ -31,7 +31,7 @@ async function run(): Promise<void> {
     const validUntil = new Date()
     validUntil.setHours(validUntil.getHours() + validHours)
 
-    const client = new EC2Client({region: region})
+    const client = new EC2Client({region})
 
     core.info('Requesting spot instance')
     const requestID = await RequestSpotInstance(
@@ -60,7 +60,6 @@ async function run(): Promise<void> {
     core.info('Writing ssh key')
     await WriteSSHKey(publicDnsName, sshPrivateKey)
   } catch (error) {
-    core.s
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
