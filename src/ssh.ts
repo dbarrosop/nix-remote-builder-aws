@@ -1,5 +1,5 @@
 import {homedir} from 'os'
-import {writeFileSync, mkdirSync, rmdirSync, chmodSync} from 'fs'
+import {writeFileSync, mkdirSync, rmSync, chmodSync} from 'fs'
 
 const home = homedir()
 
@@ -21,5 +21,5 @@ export async function WriteSSHConfig(fqdn: string): Promise<void> {
 }
 
 export async function DeleteSshConfig(): Promise<void> {
-  rmdirSync(`${home}/.ssh`, {recursive: true})
+  rmSync(`${home}/.ssh`, {recursive: true})
 }
