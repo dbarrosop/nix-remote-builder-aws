@@ -37,8 +37,8 @@ export async function RequestSpotInstance(
           DeviceName: '/dev/sda1',
           Ebs: {
             DeleteOnTermination: true,
-            VolumeSize: 8,
-            VolumeType: 'gp2',
+            VolumeSize: 30,
+            VolumeType: 'gp3',
             Encrypted: false
           }
         }
