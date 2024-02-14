@@ -48,6 +48,14 @@ Excerpt from `actions.yml`:
     required: false
     default: '1'
     description: 'the spot instance will be cancelled after this many hours if for some reason the cleanup job fails or the build takes too long'
+  disk-name:
+    required: false
+    default: '/dev/xvda'
+    description: "Disk to add to the AMI"
+  disk-size:
+    required: false
+    default: '10'
+    description: "Disk size of the disk added, for instance, 30"
 ```
 
 ## Outputs
