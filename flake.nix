@@ -2,20 +2,26 @@
   description = "Github Action to deploy nix remote builders on demand";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nix-filter.url = "github:numtide/nix-filter";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixops.url = "github:nhost/nixops";
+    nixpkgs.follows = "nixops/nixpkgs";
+    flake-utils.follows = "nixops/flake-utils";
+    nix-filter.follows = "nixops/nix-filter";
+
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-filter }:
+  outputs = { self, nixops, nixpkgs, flake-utils, nix-filter }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        overlays = [
+          nixops.overlays.default
+        ];
         pkgs = import nixpkgs {
-          inherit system;
+          inherit system overlays;
         };
 
+
         buildInputs = with pkgs; [
-          nodejs-16_x
+          nodejs
           nodePackages.npm
         ];
 

@@ -33,7 +33,13 @@ inputs:
     required: false
     default: '1'
     description: 'the spot instance will be cancelled after this many hours if for some reason the cleanup job fails or the build takes too long'
+  disk-name:
+    required: false
+    description: "Disk to add to the AMI, for instance /dev/sda1"
+  disk-size:
+    required: false
+    description: "Disk size of the disk added, for instance, 30"
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/main/index.js'
   post: 'dist/cleanup/index.js'
