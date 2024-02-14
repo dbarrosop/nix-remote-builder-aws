@@ -3,6 +3,7 @@ import {
   CancelSpotInstanceRequestsCommand,
   DescribeInstancesCommand,
   DescribeSpotInstanceRequestsCommand,
+  _InstanceType,
   RequestSpotInstancesCommand,
   TerminateInstancesCommand
 } from '@aws-sdk/client-ec2'
@@ -24,6 +25,8 @@ export async function RequestSpotInstance(
   securityGroup: string,
   sshKeyName: string,
   validUntil: Date,
+  diskName: string,
+  diskSize: number,
   availabilityZone?: string
 ): Promise<string> {
   const command = new RequestSpotInstancesCommand({
@@ -34,17 +37,17 @@ export async function RequestSpotInstance(
       SecurityGroups: [securityGroup],
       BlockDeviceMappings: [
         {
-          DeviceName: '/dev/sda1',
+          DeviceName: diskName,
           Ebs: {
             DeleteOnTermination: true,
-            VolumeSize: 30,
+            VolumeSize: diskSize,
             VolumeType: 'gp3',
             Encrypted: false
           }
         }
       ],
       ImageId: ami,
-      InstanceType: instanceType,
+      InstanceType: instanceType as _InstanceType,
       KeyName: sshKeyName,
       Placement: {
         AvailabilityZone: availabilityZone,

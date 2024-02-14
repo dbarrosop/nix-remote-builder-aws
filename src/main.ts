@@ -27,6 +27,14 @@ async function run(): Promise<void> {
     const availabilityZone = core.getInput('availability-zone', {
       required: false
     })
+    const diskName = core.getInput('disk-name', {
+      required: false
+    })
+    const diskSize = parseInt(
+      core.getInput('disk-size', {
+        required: false
+      })
+    )
 
     const validUntil = new Date()
     validUntil.setHours(validUntil.getHours() + validHours)
@@ -42,6 +50,8 @@ async function run(): Promise<void> {
       securityGroup,
       sshKeyName,
       validUntil,
+      diskName,
+      diskSize,
       availabilityZone
     )
     treatOutput('requestID', requestID)
