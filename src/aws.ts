@@ -25,33 +25,27 @@ export async function RequestSpotInstance(
   securityGroup: string,
   sshKeyName: string,
   validUntil: Date,
-  availabilityZone?: string,
-  diskName?: string,
-  diskSize?: number
+  diskName: string,
+  diskSize: number,
+  availabilityZone?: string
 ): Promise<string> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let blockDeviceMappings: any[] = []
-  if (diskName) {
-    blockDeviceMappings = [
-      {
-        DeviceName: diskName,
-        Ebs: {
-          DeleteOnTermination: true,
-          VolumeSize: diskSize ? diskSize : 30,
-          VolumeType: 'gp3',
-          Encrypted: false
-        }
-      }
-    ]
-  }
-
   const command = new RequestSpotInstancesCommand({
     AvailabilityZoneGroup: availabilityZone,
     ValidUntil: validUntil,
     InstanceCount: 1,
     LaunchSpecification: {
       SecurityGroups: [securityGroup],
-      BlockDeviceMappings: blockDeviceMappings,
+      BlockDeviceMappings: [
+        {
+          DeviceName: diskName,
+          Ebs: {
+            DeleteOnTermination: true,
+            VolumeSize: diskSize,
+            VolumeType: 'gp3',
+            Encrypted: false
+          }
+        }
+      ],
       ImageId: ami,
       InstanceType: instanceType as _InstanceType,
       KeyName: sshKeyName,

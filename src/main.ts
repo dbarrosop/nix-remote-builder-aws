@@ -50,9 +50,9 @@ async function run(): Promise<void> {
       securityGroup,
       sshKeyName,
       validUntil,
-      availabilityZone,
       diskName,
-      diskSize
+      diskSize,
+      availabilityZone
     )
     treatOutput('requestID', requestID)
 
