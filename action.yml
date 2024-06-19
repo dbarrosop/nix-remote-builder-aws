@@ -12,10 +12,9 @@ inputs:
     required: false
     description: 'EC2 instance type'
     default: 't4g.small'
-  security-group:
-    required: false
+  security-group-id:
+    required: true
     description: 'Security group to associate with the instance. It has to allow ssh from access from github workers'
-    default: 'nix-remote-builder-access-from-github'
   ssh-key-name:
     required: false
     description: 'Name of the ssh keys to use for the instance'

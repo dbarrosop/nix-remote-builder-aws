@@ -22,7 +22,7 @@ export async function RequestSpotInstance(
   name: string,
   ami: string,
   instanceType: string,
-  securityGroup: string,
+  securityGroupId: string,
   sshKeyName: string,
   validUntil: Date,
   diskName: string,
@@ -34,7 +34,7 @@ export async function RequestSpotInstance(
     ValidUntil: validUntil,
     InstanceCount: 1,
     LaunchSpecification: {
-      SecurityGroups: [securityGroup],
+      SecurityGroupIds: [securityGroupId],
       BlockDeviceMappings: [
         {
           DeviceName: diskName,

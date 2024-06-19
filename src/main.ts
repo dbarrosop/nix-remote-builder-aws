@@ -17,7 +17,7 @@ async function run(): Promise<void> {
     const name = core.getInput('name', {required: true})
     const ami = core.getInput('ami', {required: true})
     const instanceType = core.getInput('instance-type', {required: true})
-    const securityGroup = core.getInput('security-group', {required: true})
+    const securityGroupId = core.getInput('security-group-id', {required: true})
     const sshKeyName = core.getInput('ssh-key-name', {required: true})
     const sshPrivateKey = core.getInput('ssh-private-key', {required: true})
     const validHours = parseInt(core.getInput('valid-hours', {required: true}))
@@ -47,7 +47,7 @@ async function run(): Promise<void> {
       name,
       ami,
       instanceType,
-      securityGroup,
+      securityGroupId,
       sshKeyName,
       validUntil,
       diskName,
