@@ -1,0 +1,42 @@
+import {EC2Client} from '@aws-sdk/client-ec2'
+import {RequestSpotInstance} from './aws'
+
+test('request spot instance successfully', async () => {
+  const region = process.env.AWS_REGION
+  console.log('region: ', region)
+  const ami = process.env.AWS_AMI || ''
+  console.log('ami: ', ami)
+  const instanceType = process.env.AWS_INSTANCE_TYPE || ''
+  console.log('instanceType: ', instanceType)
+  const securityGroupId = process.env.AWS_SECURITY_GROUP_ID || ''
+  console.log('securityGroupId: ', securityGroupId)
+  const subnetId = process.env.AWS_SUBNET_ID || ''
+  console.log('subnetId: ', subnetId)
+  const sshKeyName = process.env.AWS_SSH_KEY_NAME || ''
+  console.log('sshKeyName: ', sshKeyName)
+  const diskName = '/dev/xvda'
+  const diskSize = 8
+
+  const validUntil = new Date()
+  validUntil.setMinutes(validUntil.getMinutes() + 5)
+
+  const name =
+    'nix-remote-builder-aws-test-' + Math.floor(Math.random() * 1000000)
+
+  const client = new EC2Client({region})
+
+  const requestID = await RequestSpotInstance(
+    client,
+    name,
+    ami,
+    instanceType,
+    securityGroupId,
+    subnetId,
+    sshKeyName,
+    validUntil,
+    diskName,
+    diskSize
+  )
+
+  expect(requestID).toBeDefined()
+})

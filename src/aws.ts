@@ -22,19 +22,19 @@ export async function RequestSpotInstance(
   name: string,
   ami: string,
   instanceType: string,
-  securityGroup: string,
+  securityGroupId: string,
+  subnetId: string,
   sshKeyName: string,
   validUntil: Date,
   diskName: string,
-  diskSize: number,
-  availabilityZone?: string
+  diskSize: number
 ): Promise<string> {
   const command = new RequestSpotInstancesCommand({
-    AvailabilityZoneGroup: availabilityZone,
     ValidUntil: validUntil,
     InstanceCount: 1,
     LaunchSpecification: {
-      SecurityGroups: [securityGroup],
+      SecurityGroupIds: [securityGroupId],
+      SubnetId: subnetId,
       BlockDeviceMappings: [
         {
           DeviceName: diskName,
@@ -48,14 +48,7 @@ export async function RequestSpotInstance(
       ],
       ImageId: ami,
       InstanceType: instanceType as _InstanceType,
-      KeyName: sshKeyName,
-      Placement: {
-        AvailabilityZone: availabilityZone,
-        Tenancy: 'default'
-      },
-      Monitoring: {
-        Enabled: false
-      }
+      KeyName: sshKeyName
     },
     TagSpecifications: [
       {
