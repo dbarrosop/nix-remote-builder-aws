@@ -27,10 +27,12 @@ Excerpt from `actions.yml`:
     required: false
     description: 'EC2 instance type'
     default: 't4g.small'
-  security-group:
-    required: false
+  security-group-id:
+    required: true
     description: 'Security group to associate with the instance. It has to allow ssh from access from github workers'
-    default: 'nix-remote-builder-access-from-github'
+  subnet-id:
+    required: true
+    description: 'Subnet to use for the instance'
   ssh-key-name:
     required: false
     description: 'Name of the ssh keys to use for the instance'
@@ -41,9 +43,6 @@ Excerpt from `actions.yml`:
   region:
     required: true
     description: 'which region to use for the request'
-  availability-zone:
-    required: false
-    description: 'which availability-zone to use for the request'
   valid-hours:
     required: false
     default: '1'
@@ -84,6 +83,8 @@ Excerpt from `actions.yml`:
       region: "eu-central-1"
       availability-zone: "eu-central-1c"
       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      subnet-id: subnet-0b3b3b3b3b3b3b3b3
+      security-group-id: sg-0b3b3b3b3b3b3b3b3
     if: ${{ ( matrix.platform == 'aarch64' ) }}
 
   ### Install nix and enable the remote builder

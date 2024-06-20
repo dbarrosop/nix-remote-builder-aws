@@ -25,9 +25,6 @@ async function run(): Promise<void> {
     const region = core.getInput('region', {
       required: true
     })
-    const availabilityZone = core.getInput('availability-zone', {
-      required: false
-    })
     const diskName = core.getInput('disk-name', {
       required: false
     })
@@ -53,8 +50,7 @@ async function run(): Promise<void> {
       sshKeyName,
       validUntil,
       diskName,
-      diskSize,
-      availabilityZone
+      diskSize
     )
     treatOutput('requestID', requestID)
 

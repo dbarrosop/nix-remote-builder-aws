@@ -28,9 +28,6 @@ inputs:
   region:
     required: true
     description: 'which region to use for the request'
-  availability-zone:
-    required: false
-    description: 'which availability-zone to use for the request'
   valid-hours:
     required: false
     default: '1'
